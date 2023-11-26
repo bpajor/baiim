@@ -1,11 +1,24 @@
 import Express from 'express';
-import { getHome, getLogin, getSignup } from '../controllers/controllers.js';
+import { getHome, getIndex, getLogin, getSignup, postCharge, postLogin, postLogout, postSignup, postWithdraw } from '../controllers/controllers.js';
+import { isAuth } from '../helpers/is-auth.js';
 
 export const router = Express.Router();
 
-router.get('/', getHome);
+router.get('/', isAuth, getHome);
 
-router.get('/login', getLogin);
+router.get('/index', isAuth, getIndex);
 
-router.get('/signup', getSignup)
+router.get('/login', isAuth, getLogin);
+
+router.get('/signup', isAuth, getSignup);
+
+router.post('/signup', postSignup);
+
+router.post('/login', postLogin);
+
+router.post('/logout', postLogout);
+
+router.post('/charge/:id', isAuth, postCharge);
+
+router.post('/withdraw/:id', isAuth, postWithdraw);
 

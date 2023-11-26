@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Wallet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .wallet-container {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;
+            width: 300px;
+        }
+
+        h2 {
+            margin: 0;
+        }
+
+        button {
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            padding: 10px 20px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .charge-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .charge-container label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .charge-container input {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        .charge-container button {
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 10px 20px;
+        }
+
+        .charge-container button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome <%=name%>!</h1>
+        <form action="/logout" method="POST">
+            <button type="submit">Logout</button>
+        </form>
+    </header>
+    <main>
+        <div class="wallet-container">
+            <h2>Wallet Amount: $<%=walletAmount%></h2>
+            <button id="chargeBtn">Charge Account</button>
+            <form action="/charge/<%=uid%>" method="POST">
+            <div class="charge-container" id="chargeContainer">
+                <label for="chargeAmount">Charge account amount:</label>
+                <input type="number" id="chargeAmount" name="chargeAmount">
+                <button id="submitCharge" type="submit">Submit</button>
+            </div>
+            </form>
+            <button id="withdrawBtn">Withdraw from Account</button>
+            <form action="/withdraw/<%=uid%>" method="POST">
+            <div class="charge-container" id="withdrawContainer">
+                <label for="withdrawAmount">Withdraw account amount:</label>
+                <input type="number" id="withdrawAmount" name="withdrawAmount">
+                <button id="submitWithdraw" type="submit">Submit</button>
+            </form>
+        </div>
+    </main>
+    <script>
+        const chargeBtn = document.getElementById('chargeBtn');
+        const chargeContainer = document.getElementById('chargeContainer');
+
+        chargeBtn.addEventListener('click', () => {
+            chargeContainer.style.display = 'block';
+        });
+
+        const withdrawBtn = document.getElementById('withdrawBtn');
+        const withdrawContainer = document.getElementById('withdrawContainer');
+
+        withdrawBtn.addEventListener('click', () => {
+            withdrawContainer.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
