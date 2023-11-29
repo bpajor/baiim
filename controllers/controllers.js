@@ -1,3 +1,4 @@
+import { validationResult } from "express-validator";
 import { User } from "../models/user.js";
 
 export const getHome = (req, res, next) => {
@@ -40,6 +41,7 @@ export const postSignup = async (req, res, next) => {
       console.log(error);
       return next(error);
     }
+
     const user = new User({ name, email, password, walletAmount: 0 });
     await user.save();
     res.redirect("/login");

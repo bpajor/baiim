@@ -29,6 +29,7 @@ app.use(
         resave: false,
         saveUninitialized: false,
         store: store,
+        cookie: { httpOnly: false }
     })
 );
 
