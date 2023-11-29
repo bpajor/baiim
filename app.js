@@ -7,12 +7,13 @@ import mongoose from 'mongoose';
 import ConnectMongoDBSession from 'connect-mongodb-session';
 import session from 'express-session';
 
+// PASTE YOUR URI HERE
+
 const MongoDBStore = ConnectMongoDBSession(session)
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const URI = `mongodb+srv://blazej122:VETQyBd5lE2PH9Gw@baiimcluster.9jzicc2.mongodb.net/baiimDB`;
 
 const app = Express();
 const store = new MongoDBStore({ uri: URI, collection: "sessions" });
@@ -36,7 +37,6 @@ app.use(async (req, res, next) => {
     if (!loggedInUser) {
         return next();
     }
-    console.log('user is logged in')
     req.user = loggedInUser;
     console.log(req.user);
     next();
@@ -88,5 +88,5 @@ try {
     await mongoose.connect(URI);
     app.listen(3000)
 } catch (error) {
-    console.log(error);
+    throw new Error("Server bug");
 }

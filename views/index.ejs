@@ -93,7 +93,7 @@
         <div class="wallet-container">
             <h2>Wallet Amount: $<%=walletAmount%></h2>
             <button id="chargeBtn">Charge Account</button>
-            <form action="/charge/<%=uid%>" method="POST">
+            <form action="/charge" method="POST">
             <div class="charge-container" id="chargeContainer">
                 <label for="chargeAmount">Charge account amount:</label>
                 <input type="number" id="chargeAmount" name="chargeAmount">
@@ -101,7 +101,7 @@
             </div>
             </form>
             <button id="withdrawBtn">Withdraw from Account</button>
-            <form action="/withdraw/<%=uid%>" method="POST">
+            <form action="/withdraw" method="POST">
             <div class="charge-container" id="withdrawContainer">
                 <label for="withdrawAmount">Withdraw account amount:</label>
                 <input type="number" id="withdrawAmount" name="withdrawAmount">

@@ -22,24 +22,24 @@ export const getSignup = (req, res, next) => {
 export const postSignup = async (req, res, next) => {
   const { name, email, password } = req.body;
   const oldInput = { name, email, password };
-  const filteredUsers = await User.find().where("email").equals(email);
-  console.log(filteredUsers.length)
-  const isUserSigned = filteredUsers.length > 0;
-  if (isUserSigned) {
-    const error = new Error("Signup error");
-    error.view = "signup";
-    error.httpStatusCode = 422;
-    const reasons = [];
-    reasons.push({
-      path: "email",
-      msg: "Użytkownik o danym emailu istnieje !",
-    });
-    error.content = { reasons, inputs: oldInput, isUserSigned };
-    console.log(error);
-    return next(error);
-  }
 
   try {
+    const filteredUsers = await User.find().where("email").equals(email);
+    console.log(filteredUsers.length)
+    const isUserSigned = filteredUsers.length > 0;
+    if (isUserSigned) {
+      const error = new Error("Signup error");
+      error.view = "signup";
+      error.httpStatusCode = 422;
+      const reasons = [];
+      reasons.push({
+        path: "email",
+        msg: "Użytkownik o danym emailu istnieje !",
+      });
+      error.content = { reasons, inputs: oldInput, isUserSigned };
+      console.log(error);
+      return next(error);
+    }
     const user = new User({ name, email, password, walletAmount: 0 });
     await user.save();
     res.redirect("/login");
@@ -52,17 +52,6 @@ export const postLogin = async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   const oldInput = { email, password };
-  // const errors = validationResult(req);
-  // if (!errors.isEmpty()) {
-  //   const error = new Error("Login error");
-  //   error.view = "login";
-  //   error.httpStatusCode = 422;
-  //   const reasons = errors.array().map((reason) => {
-  //     return { path: reason.path, msg: reason.msg };
-  //   });
-  //   error.content = { reasons, inputs: oldInput, isUserSigned: undefined };
-  //   return next(error);
-  // }
 
   const userQuery = User.where({ email: email });
   try {
@@ -86,7 +75,6 @@ export const postLogin = async (req, res, next) => {
       res.redirect("/");
     });
   } catch (error) {
-    console.log(error);
     switch (error.message) {
       case "Server bug":
         error.httpStatusCode = 500;
@@ -127,28 +115,29 @@ export const postLogout = async (req, res, next) => {
 
 export const postCharge = async (req, res, next) => {
   const chargeAmount = req.body.chargeAmount;
-  const uid = req.params.id;
   try {
-    const user = await User.findById(uid);
+    const user = await User.findById(req.user._id);
     user.walletAmount += +chargeAmount;
     await user.save();
     req.user.walletAmount += +chargeAmount;
   } catch (error) {
-    console.log(error);
+    throw new Error("Server bug");
   }
   res.redirect('/index');
 };
 
 export const postWithdraw = async (req, res, next) => {
   const withdrawAmount = req.body.withdrawAmount;
-  const uid = req.params.id;
   try {
-    const user = await User.findById(uid);
+    const user = await User.findById(req.user._id);
+    if (user.walletAmount - withdrawAmount < 0) {
+      return res.redirect('/index');
+    }
     user.walletAmount -= +withdrawAmount;
     await user.save();
     req.user.walletAmount -= +withdrawAmount;
   } catch (error) {
-    console.log(error);
+    throw new Error("Server bug");
   }
   res.redirect('/index');
 };

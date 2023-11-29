@@ -18,7 +18,7 @@ router.post('/login', postLogin);
 
 router.post('/logout', postLogout);
 
-router.post('/charge/:id', isAuth, postCharge);
+router.post('/charge', isAuth, postCharge);
 
-router.post('/withdraw/:id', isAuth, postWithdraw);
+router.post('/withdraw', isAuth, postWithdraw);
 
