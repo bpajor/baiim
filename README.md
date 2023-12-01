@@ -78,6 +78,8 @@ Ustawiamy swój login oraz hasło. Klikamy 'Create user'.
 
 W drugim kroku na tej stronie kliknij "Add My Current IP Address"
 
+Jeśli zauważysz komunikat 'This IP address has already been added.' przejdź dalej.
+
 ![Ustawienia adresu](image-5.png)
 
 Na dole strony kliknij "Finish and close".
