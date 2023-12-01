@@ -144,6 +144,10 @@ Sprawdź czy ciasteczka się nie wyświetlają.
 
 Jako wynik zadania wyślij plik app.js.
 
+<b>Uwaga!</b>
+
+Najlepszym sposobem na przetestowanie tego jest włączenie innej przeglądarki.
+
 ## Zadanie 4 - Hashowanie haseł (bcrypt)
 
 Celem tego zadania jest hashowanie haseł za pomocą biblioteki bcrypt. Aby skorzystać z biblioteki zaimportuj ją w pliku controllers:
