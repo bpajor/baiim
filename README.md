@@ -16,7 +16,13 @@ Plan projektu:
 git clone https://github.com/bpajor/baiim.git
 ```
 
-2. Zainstaluj niezbędne biblioteki:
+2. Przejdź do folderu baiim
+
+```bash
+cd baiim
+```
+
+3. Zainstaluj niezbędne biblioteki:
 
 ```bash
 npm install
