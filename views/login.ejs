@@ -52,16 +52,30 @@
     .form-group button:hover {
       background-color: #45a049;
     }
+
+    .error {
+      color: red;
+      font-size: 12px;
+      padding-bottom: 15px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Zaloguj się</h1>
     <form action="/login" method="POST">
+      <% errors.forEach(error => {
+        if (error.path === 'email') { %>
+          <div class="error"><%= error.msg %></div>
+      <% }}) %> 
       <div class="form-group">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
       </div>
+      <% errors.forEach(error => {
+        if (error.path === 'password') { %>
+          <div class="error"><%= error.msg %></div>
+      <% }}) %> 
       <div class="form-group">
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>

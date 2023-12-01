@@ -80,6 +80,10 @@
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required value="<%= oldInput ? oldInput.email : '' %>">
       </div>
+      <% errors.forEach(error => {
+        if (error.path === 'password') { %>
+          <div class="error"><%= error.msg %></div>
+      <% }}) %> 
       <div class="form-group">
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required value="<%= oldInput ? oldInput.password : '' %>">
@@ -91,4 +95,6 @@
   </div>
 </body>
 </html>
+
+
 

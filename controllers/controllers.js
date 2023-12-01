@@ -13,7 +13,7 @@ export const getIndex = (req, res, next) => {
 
 export const getLogin = (req, res, next) => {
   console.log('rendering login...')
-  res.render('login')
+  res.render('login', { oldInput: {}, errors: [] })
 }
 
 export const getSignup = (req, res, next) => {
@@ -42,6 +42,19 @@ export const postSignup = async (req, res, next) => {
       return next(error);
     }
 
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      const error = new Error("Signup error");
+      error.view = "signup";
+      error.httpStatusCode = 422;
+      const reasons = errors.array().map((reason) => {
+        return { path: reason.path, msg: reason.msg };
+      });
+      error.content = { reasons, inputs: oldInput, isUserSigned: undefined };
+      return next(error);
+    }
+
     const user = new User({ name, email, password, walletAmount: 0 });
     await user.save();
     res.redirect("/login");
@@ -56,6 +69,20 @@ export const postLogin = async (req, res, next) => {
   const oldInput = { email, password };
 
   const userQuery = User.where({ email: email });
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const error = new Error("Login error");
+    error.view = "login";
+    error.httpStatusCode = 422;
+    const reasons = errors.array().map((reason) => {
+      return { path: reason.path, msg: reason.msg };
+    });
+    error.content = { reasons, inputs: oldInput, isUserSigned: undefined };
+    return next(error);
+  }
+
   try {
     const foundUser = await userQuery.findOne();
     if (!foundUser) {
