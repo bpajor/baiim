@@ -105,6 +105,7 @@ Następnie w pliku app.js umieść tą linijkę kodu po początkowych importach:
 ```javascript
 const URI = `TWOJE_URI`;
 ```
+Podmień password na hasło otrzymane od MongoDB.
 
 ### 7. Uruchomienie projektu
 
